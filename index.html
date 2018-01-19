@@ -217,7 +217,7 @@
 </li>
 </ol>
 <h1 id="IDE和Maven开启-parameters的办法"><a href="#IDE和Maven开启-parameters的办法" class="headerlink" title="IDE和Maven开启-parameters的办法"></a>IDE和Maven开启-parameters的办法</h1><h2 id="Eclipse中开启的办法"><a href="#Eclipse中开启的办法" class="headerlink" title="Eclipse中开启的办法"></a>Eclipse中开启的办法</h2><p><code>Preferences-&gt;java-&gt;Compiler</code>下勾选<code>Store information about method parameters</code>选项。<br>这样在使用eclipse编译java文件的时候就会将参数名称编译到class文件中。</p>
-<h2 id="Idea中开启的方法"><a href="#Idea中开启的方法" class="headerlink" title="Idea中开启的方法"></a>Idea中开启的方法</h2><p><code>File-&gt;Settings-&gt;Build,Execution,Deployment-&gt;Java Compiler</code>下的<code>Additional command line parameters</code>选项中添加<code>-parameters</code>。<br>!(idea修改配置)(images/idea_modify.png)</p>
+<h2 id="Idea中开启的方法"><a href="#Idea中开启的方法" class="headerlink" title="Idea中开启的方法"></a>Idea中开启的方法</h2><p><code>File-&gt;Settings-&gt;Build,Execution,Deployment-&gt;Java Compiler</code>下的<code>Additional command line parameters</code>选项中添加<code>-parameters</code>。<br><img src="/images/idea_modify.png" alt="idea修改配置"></p>
 <h2 id="Maven中开启的办法"><a href="#Maven中开启的办法" class="headerlink" title="Maven中开启的办法"></a>Maven中开启的办法</h2><p>在pom.xml的编译插件中增加参数配置<code>&lt;arg&gt;-parameters&lt;/arg&gt;</code>。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">target</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">compilerArgs</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">arg</span>&gt;</span>-parameters<span class="tag">&lt;/<span class="name">arg</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">compilerArgs</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>另外附上测试使用Maven install命令编译class文件的情况：<br>使用maven install编译生成jar包时：</p>
@@ -860,15 +860,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">frontend</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">openlayers</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>
