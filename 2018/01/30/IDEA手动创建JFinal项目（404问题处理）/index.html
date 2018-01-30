@@ -6,18 +6,32 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yihengliu.com">
-  <title>Tag: linux | 刘成的个人博客</title>
+  <title>IDEA手动创建JFinal项目（404问题处理） | 刘成的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="日常记录">
-<meta property="og:type" content="website">
-<meta property="og:title" content="刘成的个人博客">
-<meta property="og:url" content="http://yihengliu.com/tags/linux/index.html">
+  <meta name="description" content="公司项目使用jfinal有一段时间了，也有自己手动搭建过项目，但是没有使用demo中jetty方式启动过项目。这几天决定参考jfinal文档更好的学习下jfinal框架，其实挺简单，但是碰到了一个jetty报错404的问题，查询了论坛分享和网上一些创建方式也没也没解决，折腾了一段时间，这里做个记录希望同样碰到的人可以少折腾会儿。">
+<meta name="keywords" content="java,jfinal">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IDEA手动创建JFinal项目（404问题处理）">
+<meta property="og:url" content="http://yihengliu.com/2018/01/30/IDEA手动创建JFinal项目（404问题处理）/index.html">
 <meta property="og:site_name" content="刘成的个人博客">
-<meta property="og:description" content="日常记录">
+<meta property="og:description" content="公司项目使用jfinal有一段时间了，也有自己手动搭建过项目，但是没有使用demo中jetty方式启动过项目。这几天决定参考jfinal文档更好的学习下jfinal框架，其实挺简单，但是碰到了一个jetty报错404的问题，查询了论坛分享和网上一些创建方式也没也没解决，折腾了一段时间，这里做个记录希望同样碰到的人可以少折腾会儿。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yihengliu.com/images/jfinal.png">
+<meta property="og:image" content="http://yihengliu.com/images/create_project1.png">
+<meta property="og:image" content="http://yihengliu.com/images/create_project2.png">
+<meta property="og:image" content="http://yihengliu.com/images/create_project3.png">
+<meta property="og:image" content="http://yihengliu.com/images/create_project4.png">
+<meta property="og:image" content="http://yihengliu.com/images/project_structure.png">
+<meta property="og:image" content="http://yihengliu.com/images/project_structure1.png">
+<meta property="og:image" content="http://yihengliu.com/images/run1.png">
+<meta property="og:image" content="http://yihengliu.com/images/jfinal_error1.png">
+<meta property="og:image" content="http://yihengliu.com/images/jfinal_error2.png">
+<meta property="og:image" content="http://yihengliu.com/images/run2.png">
+<meta property="og:updated_time" content="2018-01-30T07:15:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="刘成的个人博客">
-<meta name="twitter:description" content="日常记录">
+<meta name="twitter:title" content="IDEA手动创建JFinal项目（404问题处理）">
+<meta name="twitter:description" content="公司项目使用jfinal有一段时间了，也有自己手动搭建过项目，但是没有使用demo中jetty方式启动过项目。这几天决定参考jfinal文档更好的学习下jfinal框架，其实挺简单，但是碰到了一个jetty报错404的问题，查询了论坛分享和网上一些创建方式也没也没解决，折腾了一段时间，这里做个记录希望同样碰到的人可以少折腾会儿。">
+<meta name="twitter:image" content="http://yihengliu.com/images/jfinal.png">
   
     <link rel="alternative" href="/atom.xml" title="刘成的个人博客" type="application/atom+xml">
   
@@ -183,75 +197,210 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-IDEA手动创建JFinal项目（404问题处理）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/01/22/ubuntu-软件安装配置使用总结/" class="archive-article-date">
-  	<time datetime="2016-01-22T15:36:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-01-22</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/01/22/ubuntu-软件安装配置使用总结/">ubuntu 软件安装配置使用总结</a>
+    <h1 class="article-title" itemprop="name">
+      IDEA手动创建JFinal项目（404问题处理）
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/01/30/IDEA手动创建JFinal项目（404问题处理）/" class="archive-article-date">
+  	<time datetime="2018-01-30T05:42:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/images/jfinal.png" alt="jfinal"></p>
+<blockquote>
+<p>公司项目使用jfinal有一段时间了，也有自己手动搭建过项目，但是没有使用demo中jetty方式启动过项目。这几天决定参考jfinal文档更好的学习下jfinal框架，其实挺简单，但是碰到了一个jetty报错404的问题，查询了论坛分享和网上一些创建方式也没也没解决，折腾了一段时间，这里做个记录希望同样碰到的人可以少折腾会儿。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>首先创建一个maven项目（使用模板）<br><img src="/images/create_project1.png" alt="create_project1"><br><img src="/images/create_project2.png" alt="create_project2"><br>这里使用了我自己的maven配置文件<br><img src="/images/create_project3.png" alt="create_project3"><br>由于使用idea创建项目，这里我一般项目目录（Project location）和模块目录（Module file location)会分开。这样的话再新建模块的时候所有模块的目录层级更清晰点。<br><code>而这也是为后面的出404问题埋下了伏笔</code><br><img src="/images/create_project4.png" alt="create_project4"><br>结束完成项目创建。</p>
+<h2 id="修改项目配置"><a href="#修改项目配置" class="headerlink" title="修改项目配置"></a>修改项目配置</h2><ol>
+<li><p>增加maven依赖  </p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.jfinal<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jfinal<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.jfinal<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jetty-server<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>8.1.8<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- &lt;scope&gt;provided&lt;/scope&gt;--&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改maven项目结构配置<br><img src="/images/project_structure.png" alt="project_structure"><br><img src="/images/project_structure1.png" alt="project_structure1">  </p>
+</li>
+</ol>
+<h2 id="简单代码编写"><a href="#简单代码编写" class="headerlink" title="简单代码编写"></a>简单代码编写</h2><ol>
+<li><p>创建控制类<br><code>TestController.java</code></p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yihengliu.test.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.jfinal.core.Controller;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 测试控制类</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* <span class="doctag">@author</span> liucheng</span></span><br><span class="line"><span class="comment">* <span class="doctag">@version</span> 0.1</span></span><br><span class="line"><span class="comment">* <span class="doctag">@since</span> 0.1 2018-01-30 下午2:31</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">index</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    renderText(<span class="string">"Hello, JFinal!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建配置类<br><code>DemoConfig.java</code></p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yihengliu.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.jfinal.config.*;</span><br><span class="line"><span class="keyword">import</span> com.jfinal.template.Engine;</span><br><span class="line"><span class="keyword">import</span> com.yihengliu.test.controller.TestController;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* jfinal配置类</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* <span class="doctag">@author</span> liucheng</span></span><br><span class="line"><span class="comment">* <span class="doctag">@version</span> 0.1</span></span><br><span class="line"><span class="comment">* <span class="doctag">@since</span> 0.1 2018-01-30 下午2:30</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoConfig</span> <span class="keyword">extends</span> <span class="title">JFinalConfig</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configConstant</span><span class="params">(Constants me)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configRoute</span><span class="params">(Routes me)</span> </span>&#123;</span><br><span class="line">        me.add(<span class="string">"/"</span>, TestController.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configEngine</span><span class="params">(Engine me)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configPlugin</span><span class="params">(Plugins me)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configInterceptor</span><span class="params">(Interceptors me)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configHandler</span><span class="params">(Handlers me)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        JFinal.start(<span class="string">"src/main/webapp"</span>, <span class="number">9091</span>, <span class="string">"/"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>web.xml</code>文件配置  </p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>jfinal<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>com.jfinal.core.JFinalFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>configClass<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>com.yihengliu.test.DemoConfig<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>jfinal<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="测试问题处理"><a href="#测试问题处理" class="headerlink" title="测试问题处理"></a>测试问题处理</h2><p>在<code>DemoConfig</code>类中运行main函数<br><img src="/images/run1.png" alt="run1">  </p>
+<p>然后问题来了，页面怎么访问都是404，错误如图：<br><img src="/images/jfinal_error1.png" alt="jfinal_error1"><br>而不是jfinal报错(这种报错就肯定时jfinal路由配置的问题了)：<br><img src="/images/jfinal_error2.png" alt="jfinal_error2">  </p>
+<p>其实很容易就能看出是因为没有读取web.xml配置，导致项目没有启动jfinal。论坛里面也有提到这种情况的，但是由于自己没有什么jetty使用经验，所以后面还是通过debug代码才发问题的原因。<br>原因就是前面建立项目提到的，在建立项目的时候project目录和module目录不在同一个目录，所以启动的地方需要修改相对目录，加上module目录。<br><code>JFinal.start(&quot;jfinal_test/src/main/webapp&quot;, 9091, &quot;/&quot;);</code></p>
+<p>最终，重启项目，顺利运行。<br><img src="/images/run2.png" alt="run2"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>不得不说下jfinal使用确实很简单、方便，而自己搭建项目碰到问题没有快速定位也说明自己确实还有很多的东西需要学习。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">ubuntu</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">jfinal</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/os//" class="article-tag-list-link color3">os</a>
+        			<a href="/categories/language//" class="article-tag-list-link color4">language</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yihengliu.com/2018/01/30/IDEA手动创建JFinal项目（404问题处理）/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/01/23/手动创建一个最简单的maven-springboot项目/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">手动创建一个最简单的maven springboot项目</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -277,9 +426,9 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
