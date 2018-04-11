@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="刘成的个人博客">
 <meta property="og:description" content="由于最近工作中使用的都是linux系统，所以很多操心都是使用命令行，而svn在linux中也没有很好的图形化工具，不像windows有大名鼎鼎的”小乌龟”TortoiseSVN。正好svn中的主干分支之前在windows操作过，但是还是不是很清楚，正好借助这次机会使用命令行方式操作svn创建与合并分支加深理解，在这里把操作过程和操作命令在这里记录下，供有需要的人参考。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-11T08:34:04.000Z">
+<meta property="og:updated_time" content="2018-04-11T08:36:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="svn使用命令创建与合并分支">
 <meta name="twitter:description" content="由于最近工作中使用的都是linux系统，所以很多操心都是使用命令行，而svn在linux中也没有很好的图形化工具，不像windows有大名鼎鼎的”小乌龟”TortoiseSVN。正好svn中的主干分支之前在windows操作过，但是还是不是很清楚，正好借助这次机会使用命令行方式操作svn创建与合并分支加深理解，在这里把操作过程和操作命令在这里记录下，供有需要的人参考。">
@@ -212,9 +212,10 @@ var _hmt = _hmt || [];
 <h1 id="创建分支"><a href="#创建分支" class="headerlink" title="创建分支"></a>创建分支</h1><h3 id="创建分支-1"><a href="#创建分支-1" class="headerlink" title="创建分支"></a>创建分支</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn copy http://svnurl/trunk http://svnurl/branches/testbranch -m &apos;make branch testbranch&apos;</span><br></pre></td></tr></table></figure>
 <h3 id="下载主干到本地"><a href="#下载主干到本地" class="headerlink" title="下载主干到本地"></a>下载主干到本地</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn checkout http://svnurl/trunk</span><br></pre></td></tr></table></figure>
 <h3 id="下载分支到本地"><a href="#下载分支到本地" class="headerlink" title="下载分支到本地"></a>下载分支到本地</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn checkout http://svnurl/branches</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>主干分支切换命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;svn switch http://svnurl/branches/branch_name  </span><br><span class="line">&gt;svn switch http://svnurl/trunk</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
+<ul>
+<li>主干分支切换命令：    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">svn switch http://svnurl/branches/branch_name  </span><br><span class="line">svn switch http://svnurl/trunk</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 <h1 id="查询分支创建版本"><a href="#查询分支创建版本" class="headerlink" title="查询分支创建版本"></a>查询分支创建版本</h1><h3 id="方式一（本地查询）"><a href="#方式一（本地查询）" class="headerlink" title="方式一（本地查询）"></a>方式一（本地查询）</h3><ol>
 <li>cd testbranch进入分支目录；</li>
 <li>使用命令查询,最下面一次的版本即为创建分支的版本号   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn log --stop-on-copy</span><br></pre></td></tr></table></figure>
@@ -249,9 +250,10 @@ var _hmt = _hmt || [];
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn commit -m &apos;comment&apos;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<blockquote>
-<p>有时我们可能想要还原文件到创建时版本，需要使用还原命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;svn revert filename</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
+<ul>
+<li>有时我们可能想要还原文件到创建时版本，需要使用还原命令：    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn revert filename</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 
       
 
@@ -506,15 +508,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">REST</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">jfinal</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">svn</a>
+                <a href="javascript:void(0)" class="js-tag color5">REST</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -530,6 +532,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">svn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
@@ -539,10 +545,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">maven</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
