@@ -185,6 +185,225 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-svn使用命令创建与合并分支" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/11/svn使用命令创建与合并分支/">svn使用命令创建与合并分支</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/11/svn使用命令创建与合并分支/" class="archive-article-date">
+  	<time datetime="2018-04-11T07:31:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>由于最近工作中使用的都是linux系统，所以很多操心都是使用命令行，而svn在linux中也没有很好的图形化工具，不像windows有大名鼎鼎的”小乌龟”TortoiseSVN。正好svn中的主干分支之前在windows操作过，但是还是不是很清楚，正好借助这次机会使用命令行方式操作svn创建与合并分支加深理解，在这里把操作过程和操作命令在这里记录下，供有需要的人参考。</p>
+</blockquote>
+<h1 id="创建分支"><a href="#创建分支" class="headerlink" title="创建分支"></a>创建分支</h1><h3 id="创建分支-1"><a href="#创建分支-1" class="headerlink" title="创建分支"></a>创建分支</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn copy http://svnurl/trunk http://svnurl/branches/testbranch -m &apos;make branch testbranch&apos;</span><br></pre></td></tr></table></figure>
+<h3 id="下载主干到本地"><a href="#下载主干到本地" class="headerlink" title="下载主干到本地"></a>下载主干到本地</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn checkout http://svnurl/trunk</span><br></pre></td></tr></table></figure>
+<h3 id="下载分支到本地"><a href="#下载分支到本地" class="headerlink" title="下载分支到本地"></a>下载分支到本地</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn checkout http://svnurl/branches</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>主干分支切换命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;svn switch http://svnurl/branches/branch_name  </span><br><span class="line">&gt;svn switch http://svnurl/trunk</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h1 id="查询分支创建版本"><a href="#查询分支创建版本" class="headerlink" title="查询分支创建版本"></a>查询分支创建版本</h1><h3 id="方式一（本地查询）"><a href="#方式一（本地查询）" class="headerlink" title="方式一（本地查询）"></a>方式一（本地查询）</h3><ol>
+<li>cd testbranch进入分支目录；</li>
+<li>使用命令查询,最下面一次的版本即为创建分支的版本号   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn log --stop-on-copy</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="方式二（远程查询）"><a href="#方式二（远程查询）" class="headerlink" title="方式二（远程查询）"></a>方式二（远程查询）</h3><p>使用如下命令,最下面的一次版本号即为创建分支时的版本号<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn log -q --stop-on-copy http://svnurl/branches/branch_name</span><br></pre></td></tr></table></figure></p>
+<h1 id="合并分支到主干"><a href="#合并分支到主干" class="headerlink" title="合并分支到主干"></a>合并分支到主干</h1><ol>
+<li>在分支内容修改后，cd trunk进入主干目录。  </li>
+<li><p>使用如下命令合并分支修改的内容到本地。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn merge -r 分支创建版本号:HEAD http://svnurl/branches/branch_name .</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>命令说明：　  　<br> 分支版本号：分支需要合并到主干的起始版本号，由于我们一般需要合并创建分支时到最新版本之前的差别，所以一般取分支创建版本号，可以使用上节命令查询;<br> HEAD: 需要合并的结束版本号，一般我们取最新版本做比较，所以这里为HEAD;<br> 分支版本ULR: 分支版本url，具体到分支名字；<br> . : 由于已经进入到trunk目录，将差别应用到当前工作目录。</p>
+</blockquote>
+</li>
+</ol>
+<h1 id="合并主干到分支"><a href="#合并主干到分支" class="headerlink" title="合并主干到分支"></a>合并主干到分支</h1><ol>
+<li>主干内容修改并合并后，cd branches/branch_name进入分支目录。</li>
+<li>使用如下命令合并主干到分支： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn merge -r 分支创建版本号:HEAD http://svnurl/trunk .</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="提交修改"><a href="#提交修改" class="headerlink" title="提交修改"></a>提交修改</h1><ol>
+<li><p>查询状态</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn status</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解决冲突<br>使用如下命令查询冲突，如果有冲突需要手动解决冲突。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn status | grep ^C</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>告知冲突解决</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn resolved filename</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>提交修改</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn commit -m &apos;comment&apos;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>有时我们可能想要还原文件到创建时版本，需要使用还原命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;svn revert filename</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">svn</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/os//" class="article-tag-list-link color3">os</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/11/svn使用命令创建与合并分支/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Google-Guava总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/05/Google-Guava总结/">Google Guava总结</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/05/Google-Guava总结/" class="archive-article-date">
+  	<time datetime="2018-03-05T09:26:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="基本工具-Basic-utilities"><a href="#基本工具-Basic-utilities" class="headerlink" title="基本工具 Basic utilities"></a>基本工具 Basic utilities</h1><h1 id="集合Collections"><a href="#集合Collections" class="headerlink" title="集合Collections"></a>集合Collections</h1><h1 id="缓存Caches"><a href="#缓存Caches" class="headerlink" title="缓存Caches"></a>缓存Caches</h1><h1 id="函数式风格Functional-idioms"><a href="#函数式风格Functional-idioms" class="headerlink" title="函数式风格Functional idioms"></a>函数式风格Functional idioms</h1><h1 id="并发Concurrency"><a href="#并发Concurrency" class="headerlink" title="并发Concurrency"></a>并发Concurrency</h1><h1 id="字符串处理Strings"><a href="#字符串处理Strings" class="headerlink" title="字符串处理Strings"></a>字符串处理Strings</h1><h1 id="原生类型Primitives"><a href="#原生类型Primitives" class="headerlink" title="原生类型Primitives"></a>原生类型Primitives</h1><h1 id="区间Ranges"><a href="#区间Ranges" class="headerlink" title="区间Ranges"></a>区间Ranges</h1><h1 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h1><h1 id="散列Hash"><a href="#散列Hash" class="headerlink" title="散列Hash"></a>散列Hash</h1><h1 id="事件总线EventBus"><a href="#事件总线EventBus" class="headerlink" title="事件总线EventBus"></a>事件总线EventBus</h1><h1 id="数学运算Math"><a href="#数学运算Math" class="headerlink" title="数学运算Math"></a>数学运算Math</h1><h1 id="反射Reflection"><a href="#反射Reflection" class="headerlink" title="反射Reflection"></a>反射Reflection</h1><h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a href="http://ifeve.com/google-guava/" target="_blank" rel="noopener">并发网文章，Google Guava官方教程</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">guava</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/language//" class="article-tag-list-link color4">language</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/05/Google-Guava总结/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-常用maven配置总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -977,162 +1196,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-第一篇文章" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/04/第一篇文章/">第一篇文章</a>
-    </h1>
-  
-
-        
-        <a href="/2018/01/04/第一篇文章/" class="archive-article-date">
-  	<time datetime="2018-01-04T07:18:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="使用hexo生成博客"><a href="#使用hexo生成博客" class="headerlink" title="使用hexo生成博客"></a>使用hexo生成博客</h2><p>hexo官方地址：<code>https://hexo.io</code></p>
-<h2 id="部署博客到git-page"><a href="#部署博客到git-page" class="headerlink" title="部署博客到git-page"></a>部署博客到git-page</h2>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/life//" class="article-tag-list-link color5">life</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/04/第一篇文章/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/04/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2018/01/04/hello-world/" class="archive-article-date">
-  	<time datetime="2018-01-04T04:01:15.789Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/04/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1245,7 +1308,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">guava</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">svn</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1254,10 +1325,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">openlayers</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">sprintboot</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1274,6 +1341,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">sprintboot</a>
               </li>
             
             <div class="clearfix"></div>
