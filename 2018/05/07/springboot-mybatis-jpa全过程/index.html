@@ -26,7 +26,8 @@
 <meta property="og:image" content="https://images2018.cnblogs.com/blog/738557/201805/738557-20180506163657170-475128486.png">
 <meta property="og:image" content="https://images2018.cnblogs.com/blog/738557/201805/738557-20180506163736649-205156028.png">
 <meta property="og:image" content="https://images2018.cnblogs.com/blog/738557/201805/738557-20180506163751598-863991568.png">
-<meta property="og:updated_time" content="2018-05-07T00:25:19.000Z">
+<meta property="og:image" content="https://images2018.cnblogs.com/blog/738557/201805/738557-20180507095617259-649394336.png">
+<meta property="og:updated_time" content="2018-05-07T01:56:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="springboot+mybatis+jpa全过程">
 <meta name="twitter:description" content="使用springboot、mybatis和jpa搭建项目。">
@@ -240,6 +241,8 @@ var _hmt = _hmt || [];
 <h3 id="生效触发"><a href="#生效触发" class="headerlink" title="生效触发"></a>生效触发</h3><p>这里建议使用”ctrl+shif+f9”的方式重新编译，而不是设置自动编译。</p>
 <h2 id="thymeleaf修改自动生效"><a href="#thymeleaf修改自动生效" class="headerlink" title="thymeleaf修改自动生效"></a>thymeleaf修改自动生效</h2><h3 id="增加maven配置"><a href="#增加maven配置" class="headerlink" title="增加maven配置"></a>增加maven配置</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-thymeleaf<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h3 id="生效触发-1"><a href="#生效触发-1" class="headerlink" title="生效触发"></a>生效触发</h3><p>这里建议使用”ctrl+shif+f9”的方式重新编译，而不是设置自动编译。</p>
+<h2 id="增加druid的filter配置"><a href="#增加druid的filter配置" class="headerlink" title="增加druid的filter配置"></a>增加druid的filter配置</h2><p>在配置文件“application.properties”中增加filter配置<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">spring.datasource.druid.aop-patterns=cn.com.ncjk.pictransform.pic2bigfile.service.*</span><br><span class="line">spring.datasource.druid.filter.stat.db-type=mysql</span><br><span class="line">spring.datasource.druid.filter.stat.log-slow-sql=true</span><br><span class="line">spring.datasource.druid.filter.stat.slow-sql-millis=2000</span><br></pre></td></tr></table></figure></p>
+<h2 id="重启测试"><a href="#重启测试" class="headerlink" title="重启测试"></a>重启测试</h2><p>浏览器打开查看druid监控<code>http://localhost:8088/druid</code><br><img src="https://images2018.cnblogs.com/blog/738557/201805/738557-20180507095617259-649394336.png" alt=""></p>
 
       
 
@@ -506,10 +509,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">io</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
@@ -519,6 +518,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">openlayers</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">springboot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">sprintboot</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -538,11 +545,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">springboot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">sprintboot</a>
+                <a href="javascript:void(0)" class="js-tag color3">io</a>
               </li>
              
               <li class="article-tag-list-item">
