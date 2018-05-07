@@ -185,6 +185,98 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-springboot-mybatis-jpa全过程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/07/springboot-mybatis-jpa全过程/">springboot+mybatis+jpa全过程</a>
+    </h1>
+  
+
+        
+        <a href="/2018/05/07/springboot-mybatis-jpa全过程/" class="archive-article-date">
+  	<time datetime="2018-05-07T00:22:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="https://images2018.cnblogs.com/blog/738557/201805/738557-20180507082416244-414962513.png" alt=""></p>
+<blockquote>
+<p>使用springboot、mybatis和jpa搭建项目。</p>
+</blockquote>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">springboot</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/language//" class="article-tag-list-link color4">language</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/05/07/springboot-mybatis-jpa全过程/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-IO常用操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -205,31 +297,10 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="路径获取"><a href="#路径获取" class="headerlink" title="路径获取"></a>路径获取</h1><h3 id="通过class-loader获取路径"><a href="#通过class-loader获取路径" class="headerlink" title="通过class loader获取路径"></a>通过class loader获取路径</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取到class类目录</span></span><br><span class="line">String path = Test1.class.getClassLoader().getResource(<span class="string">""</span>).getPath();</span><br><span class="line">System.out.println(path);</span><br><span class="line">String path1 = Test1.class.getProtectionDomain().getCodeSource().getLocation().getPath();</span><br><span class="line">System.out.println(path1);</span><br><span class="line">String path2 = Thread.currentThread().getContextClassLoader().getResource(<span class="string">""</span>).getPath();</span><br><span class="line">System.out.println(path2);</span><br><span class="line">String path3 = Test1.class.getResource(<span class="string">""</span>).getPath();</span><br><span class="line">System.out.println(path3);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>输出：<br>/home/cc/user/idea/demos/javacore/javacore/target/test-classes/<br>/home/cc/user/idea/demos/javacore/javacore/target/test-classes/<br>/home/cc/user/idea/demos/javacore/javacore/target/test-classes/<br>/home/cc/user/idea/demos/javacore/javacore/target/test-classes/com/yihengliu/test/io/</p>
+        <blockquote>
+<p>这里总结一些Io相关的常用操作。</p>
 </blockquote>
-<h3 id="通过File获取路径"><a href="#通过File获取路径" class="headerlink" title="通过File获取路径"></a>通过File获取路径</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">File file = <span class="keyword">new</span> File(<span class="string">".."</span>);</span><br><span class="line">System.out.println(file.getCanonicalPath());</span><br><span class="line">System.out.println(file.getAbsolutePath());</span><br><span class="line">System.out.println(file.getPath());</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>输出：<br>/home/cc/user/idea/demos<br>/home/cc/user/idea/demos/javacore/..<br>..</p>
-</blockquote>
-<h3 id="通过System类获取"><a href="#通过System类获取" class="headerlink" title="通过System类获取"></a>通过System类获取</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(System.getProperty(<span class="string">"user.dir"</span>));</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>输出：<br>/home/cc/user/idea/demos/javacore</p>
-</blockquote>
-<h1 id="字符操作"><a href="#字符操作" class="headerlink" title="字符操作"></a>字符操作</h1><h3 id="获取文件内容"><a href="#获取文件内容" class="headerlink" title="获取文件内容"></a>获取文件内容</h3><ul>
-<li>通过jdk nio Files获取，返回每行组成的List集合  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; strings = Files.readAllLines(Paths.get(Test1.class.getProtectionDomain().getCodeSource().getLocation().getPath() + &quot;1.txt&quot;));</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="字节操作"><a href="#字节操作" class="headerlink" title="字节操作"></a>字节操作</h1><h3 id="获取文件字节数组"><a href="#获取文件字节数组" class="headerlink" title="获取文件字节数组"></a>获取文件字节数组</h3><ul>
-<li>通过jdk nio Files获取,需要确保文件已经关闭  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Reads all the bytes from a file. The method ensures that the file is closed when all bytes have been read or an I/O error, or other runtime exception, is thrown</span></span><br><span class="line"><span class="keyword">byte</span>[] bytes = Files.readAllBytes(Paths.get(Test1.class.getProtectionDomain().getCodeSource().getLocation().getPath() + <span class="string">"aaa2.png"</span>));</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="获取网络或文件字节数组"><a href="#获取网络或文件字节数组" class="headerlink" title="获取网络或文件字节数组"></a>获取网络或文件字节数组</h3><ul>
-<li>通过ByteArrayOutputStream接受inputStream读出的内容，网络传输的时候需要使用循环read的方式获取，不能使用readAll之类的方法，因为此类方法都需要获取inputSteam流中的大小，但是网络传输有可能还不知道其大小，所以需要循环读取。  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ByteArrayOutputStream arrayOutputStream = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line"><span class="keyword">byte</span>[] buffer = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">8024</span>];</span><br><span class="line"><span class="keyword">int</span> len;</span><br><span class="line"><span class="keyword">while</span> (-<span class="number">1</span> != (len = inputStream.read(buffer))) &#123;</span><br><span class="line">    arrayOutputStream.write(buffer, <span class="number">0</span>, len);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">byte</span>[] <span class="keyword">byte</span> = arrayOutputSteam.toByteArray();</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
+        
       
 
       
@@ -1050,91 +1121,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-mysql-分表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/08/mysql-分表/">mysql 分表</a>
-    </h1>
-  
-
-        
-        <a href="/2018/01/08/mysql-分表/" class="archive-article-date">
-  	<time datetime="2018-01-08T09:14:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="MERGE技术"><a href="#MERGE技术" class="headerlink" title="MERGE技术"></a>MERGE技术</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> <span class="string">`user1`</span> (  </span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,  </span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">50</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,  </span><br><span class="line">  <span class="string">`sex`</span> <span class="built_in">int</span>(<span class="number">1</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,  </span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)  </span><br><span class="line">) <span class="keyword">ENGINE</span>=MyISAM  <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8 AUTO_INCREMENT=<span class="number">1</span> ;  </span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> <span class="string">`user2`</span> (  </span><br><span class="line"> <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,  </span><br><span class="line"> <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">50</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,  </span><br><span class="line"> <span class="string">`sex`</span> <span class="built_in">int</span>(<span class="number">1</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,  </span><br><span class="line"> PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)  </span><br><span class="line">) <span class="keyword">ENGINE</span>=MyISAM  <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8 AUTO_INCREMENT=<span class="number">1</span> ;  </span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`user1`</span> (<span class="string">`name`</span>, <span class="string">`sex`</span>) <span class="keyword">VALUES</span>(<span class="string">'张映1'</span>, <span class="number">0</span>);  </span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`user2`</span> (<span class="string">`name`</span>, <span class="string">`sex`</span>) <span class="keyword">VALUES</span>(<span class="string">'tank'</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> alluser;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> <span class="string">`alluser`</span> (  </span><br><span class="line"> <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,  </span><br><span class="line"> <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">50</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,  </span><br><span class="line"> <span class="string">`sex`</span> <span class="built_in">int</span>(<span class="number">1</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,  </span><br><span class="line"> <span class="keyword">INDEX</span>(<span class="keyword">id</span>)  </span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">MERGE</span> <span class="keyword">UNION</span>=(user1,user2) INSERT_METHOD=<span class="keyword">LAST</span> AUTO_INCREMENT=<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`alluser`</span> (<span class="string">`name`</span>, <span class="string">`sex`</span>) <span class="keyword">VALUES</span>(<span class="string">'tank4'</span>, <span class="number">0</span>);</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> alluser;</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> user1;</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> user2;</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/db//" class="article-tag-list-link color3">db</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/08/mysql-分表/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1239,7 +1225,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">io</a>
+                <a href="javascript:void(0)" class="js-tag color1">guava</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1247,11 +1233,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">guava</a>
+                <a href="javascript:void(0)" class="js-tag color2">jfinal</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">jfinal</a>
+                <a href="javascript:void(0)" class="js-tag color3">io</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1267,10 +1253,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">sprintboot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
@@ -1279,15 +1261,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">svn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">maven</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">springboot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">sprintboot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">svn</a>
               </li>
             
             <div class="clearfix"></div>
