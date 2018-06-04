@@ -6,18 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yihengliu.com">
-  <title>Tag: REST | 刘成的个人博客</title>
+  <title>mysql预编译-Prepared-Statements | 刘成的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="日常记录">
-<meta property="og:type" content="website">
-<meta property="og:title" content="刘成的个人博客">
-<meta property="og:url" content="http://yihengliu.com/tags/REST/index.html">
+  <meta name="description" content="前几天在和我弟聊到数据预编译的时候突然想到预编译为什么可以加快访问速度?我们一般在jdbc连接的时候sql用占位符就认为是使用了数据库的预编译功能,但实际又是怎么样的呢?然后自己网上查了一些文章,这里也做一些自己的总结。">
+<meta name="keywords" content="java,mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql预编译-Prepared-Statements">
+<meta property="og:url" content="http://yihengliu.com/2018/06/04/mysql预编译-Prepared-Statements/index.html">
 <meta property="og:site_name" content="刘成的个人博客">
-<meta property="og:description" content="日常记录">
+<meta property="og:description" content="前几天在和我弟聊到数据预编译的时候突然想到预编译为什么可以加快访问速度?我们一般在jdbc连接的时候sql用占位符就认为是使用了数据库的预编译功能,但实际又是怎么样的呢?然后自己网上查了一些文章,这里也做一些自己的总结。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yihengliu.com/images/mysql.jpeg">
+<meta property="og:updated_time" content="2018-06-04T10:32:43.072Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="刘成的个人博客">
-<meta name="twitter:description" content="日常记录">
+<meta name="twitter:title" content="mysql预编译-Prepared-Statements">
+<meta name="twitter:description" content="前几天在和我弟聊到数据预编译的时候突然想到预编译为什么可以加快访问速度?我们一般在jdbc连接的时候sql用占位符就认为是使用了数据库的预编译功能,但实际又是怎么样的呢?然后自己网上查了一些文章,这里也做一些自己的总结。">
+<meta name="twitter:image" content="http://yihengliu.com/images/mysql.jpeg">
   
     <link rel="alternative" href="/atom.xml" title="刘成的个人博客" type="application/atom+xml">
   
@@ -183,36 +187,126 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-mysql预编译-Prepared-Statements" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/05/HTTP-REST-JAVA实现/" class="archive-article-date">
-  	<time datetime="2018-01-05T05:20:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-05</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/05/HTTP-REST-JAVA实现/">HTTP/REST JAVA实现</a>
+    <h1 class="article-title" itemprop="name">
+      mysql预编译-Prepared-Statements
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/06/04/mysql预编译-Prepared-Statements/" class="archive-article-date">
+  	<time datetime="2018-06-04T06:58:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/images/mysql.jpeg" alt="mysql"></p>
+<blockquote>
+<p>前几天在和我弟聊到数据预编译的时候突然想到预编译为什么可以加快访问速度?我们一般在jdbc连接的时候sql用占位符就认为是使用了数据库的预编译功能,但实际又是怎么样的呢?然后自己网上查了一些文章,这里也做一些自己的总结。<br><a id="more"></a></p>
+</blockquote>
+<h2 id="数据库基本配置"><a href="#数据库基本配置" class="headerlink" title="数据库基本配置"></a>数据库基本配置</h2><p>这里先对数据库进行基本配置以保证后续测试正常运行。</p>
+<ul>
+<li><p>开启数据库日志记录</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--- 查看配置</span></span><br><span class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'general%'</span>;</span><br><span class="line">+<span class="comment">------------------+--------------------------------------------+</span></span><br><span class="line">| Variable_name    | Value                                      |</span><br><span class="line">|<span class="comment">------------------+--------------------------------------------|</span></span><br><span class="line">| general_log      | ON                                         |</span><br><span class="line">| general_log_file | /var/lib/mysql/iZwz9ecwpuisr9ww016vuyZ.log |</span><br><span class="line">+<span class="comment">------------------+--------------------------------------------+</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 设置开启</span></span><br><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> general_log = <span class="keyword">on</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建测试表</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span></span><br><span class="line">    t_test(</span><br><span class="line">        <span class="keyword">id</span> <span class="built_in">INT</span> PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line">        <span class="keyword">value</span> <span class="built_in">VARCHAR</span>(<span class="number">20</span>)</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="使用MySql客户端连接进行预编译"><a href="#使用MySql客户端连接进行预编译" class="headerlink" title="使用MySql客户端连接进行预编译"></a>使用MySql客户端连接进行预编译</h2><h3 id="编译sql语句"><a href="#编译sql语句" class="headerlink" title="编译sql语句"></a>编译sql语句</h3><ul>
+<li><p>语法  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PREPARE stmt_name FROM preparable_stm</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编译语句</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">prepare</span> ins <span class="keyword">from</span> <span class="string">'insert into t_test select ?, ?'</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 声明变量</span></span><br><span class="line"><span class="keyword">set</span> @<span class="keyword">id</span>=<span class="number">1</span>,@<span class="keyword">value</span>=<span class="string">'abc'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 执行语句</span></span><br><span class="line"><span class="keyword">execute</span> ins <span class="keyword">USING</span> @<span class="keyword">id</span>,@<span class="keyword">value</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="执行日志"><a href="#执行日志" class="headerlink" title="执行日志"></a>执行日志</h3><ul>
+<li><p>执行语句</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">prepare</span> sel1 <span class="keyword">from</span> <span class="string">'select * from t_test where value=?'</span>;</span><br><span class="line"><span class="keyword">set</span> @value1=<span class="string">'abc'</span>;</span><br><span class="line"><span class="keyword">execute</span> sel1 <span class="keyword">USING</span> @value1;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>日志</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2018-06-04T07:40:06.827917Z       413 Query     PREPARE sel1 FROM ...</span><br><span class="line">2018-06-04T07:40:06.828062Z       413 Prepare   select * from t_test where value=?</span><br><span class="line">2018-06-04T07:40:35.810805Z       413 Query     set @value1=&apos;abc&apos;</span><br><span class="line">2018-06-04T07:40:56.044515Z       413 Query     execute sel1 USING @value1</span><br><span class="line">2018-06-04T07:40:56.044587Z       413 Execute   select * from t_test where value=&apos;abc&apos;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="使用MySql数据java驱动进行预编译"><a href="#使用MySql数据java驱动进行预编译" class="headerlink" title="使用MySql数据java驱动进行预编译"></a>使用MySql数据java驱动进行预编译</h2><h3 id="jdbc插入数据"><a href="#jdbc插入数据" class="headerlink" title="jdbc插入数据"></a>jdbc插入数据</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException </span>&#123;</span><br><span class="line">    Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line"></span><br><span class="line">    String url = <span class="string">"jdbc:mysql://119.23.71.218/test"</span>;</span><br><span class="line">    <span class="keyword">try</span>(Connection con = DriverManager.getConnection(url, <span class="string">"root"</span>, <span class="string">"cc"</span>)) &#123;</span><br><span class="line">        String sql = <span class="string">"insert into t_test select ?, ?"</span>;</span><br><span class="line">        PreparedStatement statement = con.prepareStatement(sql);</span><br><span class="line">        statement.setInt(<span class="number">1</span>, <span class="number">11</span>);</span><br><span class="line">        statement.setString(<span class="number">2</span>, <span class="string">"abc"</span>);</span><br><span class="line">        statement.executeUpdate();</span><br><span class="line">        statement.close();</span><br><span class="line"></span><br><span class="line">        String sql1 = <span class="string">"insert into t_test select ?, ?"</span>;</span><br><span class="line">        PreparedStatement statement1 = con.prepareStatement(sql1);</span><br><span class="line">        statement1.setInt(<span class="number">1</span>, <span class="number">12</span>);</span><br><span class="line">        statement1.setString(<span class="number">2</span>, <span class="string">"abc"</span>);</span><br><span class="line">        statement1.executeUpdate();</span><br><span class="line">        statement1.close();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>日志<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">2018-06-04T09:31:47.827778Z	  421 Connect	root@220.175.70.180 on test using TCP/IP</span><br><span class="line">2018-06-04T09:31:48.829052Z	  421 Query	/* mysql-connector-java-5.1.20 ( Revision: tonci.grgin@oracle.com-20111003110438-qfydx066wsbydkbw ) */SHOW VARIABLES WHERE Variable_name =&apos;language&apos; OR Variable_name = &apos;net_write_timeout&apos; OR Variable_name = &apos;interactive_timeout&apos; OR Variable_name = &apos;wait_timeout&apos; OR Variable_name = &apos;character_set_client&apos; OR Variable_name = &apos;character_set_connection&apos; OR Variable_name = &apos;character_set&apos; OR Variable_name = &apos;character_set_server&apos; OR Variable_name = &apos;tx_isolation&apos; OR Variable_name = &apos;transaction_isolation&apos; OR Variable_name = &apos;character_set_results&apos; OR Variable_name = &apos;timezone&apos; OR Variable_name = &apos;time_zone&apos; OR Variable_name = &apos;system_time_zone&apos; OR Variable_name = &apos;lower_case_table_names&apos; OR Variable_name = &apos;max_allowed_packet&apos; OR Variable_name = &apos;net_buffer_length&apos; OR Variable_name = &apos;sql_mode&apos; OR Variable_name = &apos;query_cache_type&apos; OR Variable_name = &apos;query_cache_size&apos; OR Variable_name = &apos;init_connect&apos;</span><br><span class="line">2018-06-04T09:31:49.828078Z	  421 Query	/* mysql-connector-java-5.1.20 ( Revision: tonci.grgin@oracle.com-20111003110438-qfydx066wsbydkbw ) */SELECT @@session.auto_increment_increment</span><br><span class="line">2018-06-04T09:31:50.827721Z	  421 Query	SHOW COLLATION</span><br><span class="line">2018-06-04T09:31:53.827691Z	  421 Query	SHOW CHARACTER SET</span><br><span class="line">2018-06-04T09:31:54.827731Z	  421 Query	SET NAMES latin1</span><br><span class="line">2018-06-04T09:31:55.835948Z	  421 Query	SET character_set_results = NULL</span><br><span class="line">2018-06-04T09:31:56.828836Z	  421 Query	SET autocommit=1</span><br><span class="line">2018-06-04T09:31:57.827763Z	  421 Query	insert into t_test select 11, &apos;abc&apos;</span><br><span class="line">2018-06-04T09:31:58.827873Z	  421 Query	insert into t_test select 12, &apos;abc&apos;</span><br><span class="line">2018-06-04T09:31:59.807905Z	  421 Quit</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>从日志中可以看出，这时没有使用和执行预编译。客户端直接生成sql执行。</p>
+</blockquote>
+<h3 id="开启服务端预编译"><a href="#开启服务端预编译" class="headerlink" title="开启服务端预编译"></a>开启服务端预编译</h3><ul>
+<li><p>jdbc连结url中添加<code>useServerPrepStmts=true</code>，启用服务端预编译</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException </span>&#123;</span><br><span class="line">    Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line"></span><br><span class="line">    String url = <span class="string">"jdbc:mysql://119.23.71.218/test?useServerPrepStmts=true"</span>;</span><br><span class="line">    <span class="keyword">try</span>(Connection con = DriverManager.getConnection(url, <span class="string">"root"</span>, <span class="string">"cc"</span>)) &#123;</span><br><span class="line">        String sql = <span class="string">"insert into t_test select ?, ?"</span>;</span><br><span class="line">        PreparedStatement statement = con.prepareStatement(sql);</span><br><span class="line"></span><br><span class="line">        statement.setInt(<span class="number">1</span>, <span class="number">4</span>);</span><br><span class="line">        statement.setString(<span class="number">2</span>, <span class="string">"abc"</span>);</span><br><span class="line">        statement.executeUpdate();</span><br><span class="line"></span><br><span class="line">        statement.close();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>日志</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">2018-06-04T08:57:56.828142Z	  416 Connect	root@220.175.70.180 on test using TCP/IP</span><br><span class="line">2018-06-04T08:57:56.861148Z	  416 Query	/* mysql-connector-java-5.1.20 ( Revision: tonci.grgin@oracle.com-20111003110438-qfydx066wsbydkbw ) */SHOW VARIABLES WHERE Variable_name =&apos;language&apos; OR Variable_name = &apos;net_write_timeout&apos; OR Variable_name = &apos;interactive_timeout&apos; OR Variable_name = &apos;wait_timeout&apos; OR Variable_name = &apos;character_set_client&apos; OR Variable_name = &apos;character_set_connection&apos; OR Variable_name = &apos;character_set&apos; OR Variable_name = &apos;character_set_server&apos; OR Variable_name = &apos;tx_isolation&apos; OR Variable_name = &apos;transaction_isolation&apos; OR Variable_name = &apos;character_set_results&apos; OR Variable_name = &apos;timezone&apos; OR Variable_name = &apos;time_zone&apos; OR Variable_name = &apos;system_time_zone&apos; OR Variable_name = &apos;lower_case_table_names&apos; OR Variable_name = &apos;max_allowed_packet&apos; OR Variable_name = &apos;net_buffer_length&apos; OR Variable_name = &apos;sql_mode&apos; OR Variable_name = &apos;query_cache_type&apos; OR Variable_name = &apos;query_cache_size&apos; OR Variable_name = &apos;init_connect&apos;</span><br><span class="line">2018-06-04T08:57:56.911249Z	  416 Query	/* mysql-connector-java-5.1.20 ( Revision: tonci.grgin@oracle.com-20111003110438-qfydx066wsbydkbw ) */SELECT @@session.auto_increment_increment</span><br><span class="line">2018-06-04T08:57:56.939101Z	  416 Query	SHOW COLLATION</span><br><span class="line">2018-06-04T08:57:56.974224Z	  416 Query	SHOW CHARACTER SET</span><br><span class="line">2018-06-04T08:57:57.004165Z	  416 Query	SET NAMES latin1</span><br><span class="line">2018-06-04T08:57:57.031271Z	  416 Query	SET character_set_results = NULL</span><br><span class="line">2018-06-04T08:57:57.059271Z	  416 Query	SET autocommit=1</span><br><span class="line">2018-06-04T08:57:57.101266Z	  416 Prepare	insert into t_test select ?, ?</span><br><span class="line">2018-06-04T08:57:57.811185Z	  416 Execute	insert into t_test select 4, &apos;abc&apos;</span><br><span class="line">2018-06-04T08:57:57.841198Z	  416 Close stmt	</span><br><span class="line">2018-06-04T08:57:57.841266Z	  416 Quit</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>可以看到这是预编译了语句，并且执行了语句。</p>
+</blockquote>
+<ul>
+<li>启用服务端预编译缓存，jdbc连接url增加<code>cachePrepStmts=true</code><br>未添加缓存的测试：   <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException </span>&#123;</span><br><span class="line">    Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line"></span><br><span class="line">    String url = <span class="string">"jdbc:mysql://119.23.71.218/test?useServerPrepStmts=true"</span>;</span><br><span class="line">    <span class="keyword">try</span>(Connection con = DriverManager.getConnection(url, <span class="string">"root"</span>, <span class="string">"cc"</span>)) &#123;</span><br><span class="line">        String sql = <span class="string">"insert into t_test select ?, ?"</span>;</span><br><span class="line">        PreparedStatement statement = con.prepareStatement(sql);</span><br><span class="line">        statement.setInt(<span class="number">1</span>, <span class="number">5</span>);</span><br><span class="line">        statement.setString(<span class="number">2</span>, <span class="string">"abc"</span>);</span><br><span class="line">        statement.executeUpdate();</span><br><span class="line">        statement.close();</span><br><span class="line"></span><br><span class="line">        String sql1 = <span class="string">"insert into t_test select ?, ?"</span>;</span><br><span class="line">        PreparedStatement statement1 = con.prepareStatement(sql1);</span><br><span class="line">        statement1.setInt(<span class="number">1</span>, <span class="number">6</span>);</span><br><span class="line">        statement1.setString(<span class="number">2</span>, <span class="string">"abc"</span>);</span><br><span class="line">        statement1.executeUpdate();</span><br><span class="line">        statement1.close();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>日志：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">2018-06-04T09:09:33.828016Z	  417 Connect	root@220.175.70.180 on test using TCP/IP</span><br><span class="line">2018-06-04T09:09:33.851918Z	  417 Query	/* mysql-connector-java-5.1.20 ( Revision: tonci.grgin@oracle.com-20111003110438-qfydx066wsbydkbw ) */SHOW VARIABLES WHERE Variable_name =&apos;language&apos; OR Variable_name = &apos;net_write_timeout&apos; OR Variable_name = &apos;interactive_timeout&apos; OR Variable_name = &apos;wait_timeout&apos; OR Variable_name = &apos;character_set_client&apos; OR Variable_name = &apos;character_set_connection&apos; OR Variable_name = &apos;character_set&apos; OR Variable_name = &apos;character_set_server&apos; OR Variable_name = &apos;tx_isolation&apos; OR Variable_name = &apos;transaction_isolation&apos; OR Variable_name = &apos;character_set_results&apos; OR Variable_name = &apos;timezone&apos; OR Variable_name = &apos;time_zone&apos; OR Variable_name = &apos;system_time_zone&apos; OR Variable_name = &apos;lower_case_table_names&apos; OR Variable_name = &apos;max_allowed_packet&apos; OR Variable_name = &apos;net_buffer_length&apos; OR Variable_name = &apos;sql_mode&apos; OR Variable_name = &apos;query_cache_type&apos; OR Variable_name = &apos;query_cache_size&apos; OR Variable_name = &apos;init_connect&apos;</span><br><span class="line">2018-06-04T09:09:33.896901Z	  417 Query	/* mysql-connector-java-5.1.20 ( Revision: tonci.grgin@oracle.com-20111003110438-qfydx066wsbydkbw ) */SELECT @@session.auto_increment_increment</span><br><span class="line">2018-06-04T09:09:33.917895Z	  417 Query	SHOW COLLATION</span><br><span class="line">2018-06-04T09:09:33.945729Z	  417 Query	SHOW CHARACTER SET</span><br><span class="line">2018-06-04T09:09:33.966685Z	  417 Query	SET NAMES latin1</span><br><span class="line">2018-06-04T09:09:33.985769Z	  417 Query	SET character_set_results = NULL</span><br><span class="line">2018-06-04T09:09:34.004857Z	  417 Query	SET autocommit=1</span><br><span class="line">2018-06-04T09:09:34.040981Z	  417 Prepare	insert into t_test select ?, ?</span><br><span class="line">2018-06-04T09:09:34.060854Z	  417 Execute	insert into t_test select 5, &apos;abc&apos;</span><br><span class="line">2018-06-04T09:09:34.084805Z	  417 Close stmt	</span><br><span class="line">2018-06-04T09:09:34.085837Z	  417 Prepare	insert into t_test select ?, ?</span><br><span class="line">2018-06-04T09:09:34.103853Z	  417 Execute	insert into t_test select 6, &apos;abc&apos;</span><br><span class="line">2018-06-04T09:09:34.124749Z	  417 Close stmt	</span><br><span class="line">2018-06-04T09:09:34.124928Z	  417 Quit</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>从日志中可以看到这个时候虽然预编译执行发送到了mysql服务端，但是两个一样的sql会编译两次，这个时候就需要增加预编译缓存了(注意：我们这里java连接时关闭了stmt，或是重新建立了一个stmt)。</p>
+</blockquote>
+<p>启用预编译缓存，修改jdbcurl配置：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException </span>&#123;</span><br><span class="line">    Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line"></span><br><span class="line">    String url = <span class="string">"jdbc:mysql://119.23.71.218/test?useServerPrepStmts=true&amp;cachePrepStmts=true"</span>;</span><br><span class="line">    <span class="keyword">try</span>(Connection con = DriverManager.getConnection(url, <span class="string">"root"</span>, <span class="string">"cc"</span>)) &#123;</span><br><span class="line">        String sql = <span class="string">"insert into t_test select ?, ?"</span>;</span><br><span class="line">        PreparedStatement statement = con.prepareStatement(sql);</span><br><span class="line">        statement.setInt(<span class="number">1</span>, <span class="number">9</span>);</span><br><span class="line">        statement.setString(<span class="number">2</span>, <span class="string">"abc"</span>);</span><br><span class="line">        statement.executeUpdate();</span><br><span class="line">        statement.close();</span><br><span class="line"></span><br><span class="line">        String sql1 = <span class="string">"insert into t_test select ?, ?"</span>;</span><br><span class="line">        PreparedStatement statement1 = con.prepareStatement(sql1);</span><br><span class="line">        statement1.setInt(<span class="number">1</span>, <span class="number">10</span>);</span><br><span class="line">        statement1.setString(<span class="number">2</span>, <span class="string">"abc"</span>);</span><br><span class="line">        statement1.executeUpdate();</span><br><span class="line">        statement1.close();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>日志：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">2018-06-04T09:17:27.944791Z	  419 Connect	root@220.175.70.180 on test using TCP/IP</span><br><span class="line">2018-06-04T09:17:27.968875Z	  419 Query	/* mysql-connector-java-5.1.20 ( Revision: tonci.grgin@oracle.com-20111003110438-qfydx066wsbydkbw ) */SHOW VARIABLES WHERE Variable_name =&apos;language&apos; OR Variable_name = &apos;net_write_timeout&apos; OR Variable_name = &apos;interactive_timeout&apos; OR Variable_name = &apos;wait_timeout&apos; OR Variable_name = &apos;character_set_client&apos; OR Variable_name = &apos;character_set_connection&apos; OR Variable_name = &apos;character_set&apos; OR Variable_name = &apos;character_set_server&apos; OR Variable_name = &apos;tx_isolation&apos; OR Variable_name = &apos;transaction_isolation&apos; OR Variable_name = &apos;character_set_results&apos; OR Variable_name = &apos;timezone&apos; OR Variable_name = &apos;time_zone&apos; OR Variable_name = &apos;system_time_zone&apos; OR Variable_name = &apos;lower_case_table_names&apos; OR Variable_name = &apos;max_allowed_packet&apos; OR Variable_name = &apos;net_buffer_length&apos; OR Variable_name = &apos;sql_mode&apos; OR Variable_name = &apos;query_cache_type&apos; OR Variable_name = &apos;query_cache_size&apos; OR Variable_name = &apos;init_connect&apos;</span><br><span class="line">2018-06-04T09:17:28.012936Z	  419 Query	/* mysql-connector-java-5.1.20 ( Revision: tonci.grgin@oracle.com-20111003110438-qfydx066wsbydkbw ) */SELECT @@session.auto_increment_increment</span><br><span class="line">2018-06-04T09:17:28.032769Z	  419 Query	SHOW COLLATION</span><br><span class="line">2018-06-04T09:17:28.060912Z	  419 Query	SHOW CHARACTER SET</span><br><span class="line">2018-06-04T09:17:28.081732Z	  419 Query	SET NAMES latin1</span><br><span class="line">2018-06-04T09:17:28.103845Z	  419 Query	SET character_set_results = NULL</span><br><span class="line">2018-06-04T09:17:28.125928Z	  419 Query	SET autocommit=1</span><br><span class="line">2018-06-04T09:17:28.165973Z	  419 Prepare	insert into t_test select ?, ?</span><br><span class="line">2018-06-04T09:17:28.188790Z	  419 Execute	insert into t_test select 9, &apos;abc&apos;</span><br><span class="line">2018-06-04T09:17:28.235868Z	  419 Execute	insert into t_test select 10, &apos;abc&apos;</span><br><span class="line">2018-06-04T09:17:28.258873Z	  419 Quit</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>这个时候我们查看日志可能看到，预编译sql只执行了一次。</p>
+</blockquote>
+<h2 id="本地预编译-缓存"><a href="#本地预编译-缓存" class="headerlink" title="本地预编译+缓存"></a>本地预编译+缓存</h2><h2 id="sql注入相关"><a href="#sql注入相关" class="headerlink" title="sql注入相关"></a>sql注入相关</h2><h3 id="注入说明"><a href="#注入说明" class="headerlink" title="注入说明"></a>注入说明</h3><p>实例：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t_test <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">1</span> <span class="keyword">or</span> <span class="number">1</span>=<span class="number">1</span>;</span><br></pre></td></tr></table></figure></p>
+<h3 id="使用mysql客户端"><a href="#使用mysql客户端" class="headerlink" title="使用mysql客户端"></a>使用mysql客户端</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 正常查询</span></span><br><span class="line"><span class="keyword">prepare</span> sel <span class="keyword">from</span> <span class="string">'select * from t_test where value = ?'</span>;</span><br><span class="line"><span class="keyword">set</span> @v1=<span class="string">'abc'</span>;</span><br><span class="line"><span class="keyword">execute</span> sel <span class="keyword">using</span> @v1;</span><br><span class="line"><span class="comment">-- 注入</span></span><br><span class="line"><span class="keyword">set</span> @v1=<span class="string">'abc'</span> <span class="keyword">or</span> <span class="number">1</span>=<span class="number">1</span>;</span><br><span class="line"><span class="keyword">execute</span> sel <span class="keyword">using</span> @v1;</span><br><span class="line"><span class="comment">-- 后台查询查询语句变成 select * from t_test where value = 1</span></span><br></pre></td></tr></table></figure>
+<h3 id="java客户端连接"><a href="#java客户端连接" class="headerlink" title="java客户端连接"></a>java客户端连接</h3><ul>
+<li>未开启预编译<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">String sql2 = <span class="string">"select * from t_test where value = ?"</span>;</span><br><span class="line">PreparedStatement statement2 = con.prepareStatement(sql2);</span><br><span class="line">statement2.setString(<span class="number">1</span>, <span class="string">"'abc' or 1=1"</span>);</span><br><span class="line">ResultSet resultSet = statement2.executeQuery();</span><br><span class="line">resultSet.next();</span><br><span class="line">System.out.println(resultSet.getInt(<span class="number">1</span>));</span><br><span class="line">System.out.println(resultSet.getString(<span class="number">2</span>));</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>执行日志查看：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2018-06-04T10:30:12.253397Z	  444 Query	select * from t_test where value = &apos;abc&apos;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>开启预编译<br>执行日志查看：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2018-06-04T10:31:19.273094Z	  445 Prepare	select * from t_test where value = ?</span><br><span class="line">2018-06-04T10:31:19.295910Z	  445 Execute	select * from t_test where value = &apos;\&apos;abc\&apos; or 1=1&apos;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a href="https://www.cnblogs.com/micrari/p/7112781.html" target="_blank" rel="noopener">参考1</a></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -222,36 +316,123 @@ var _hmt = _hmt || [];
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">REST</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/language//" class="article-tag-list-link color4">language</a>
+        			<a href="/categories/OS//" class="article-tag-list-link color3">OS</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yihengliu.com/2018/06/04/mysql预编译-Prepared-Statements/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/05/25/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hello World</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -277,9 +458,9 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
